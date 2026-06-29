@@ -23,4 +23,3 @@ jobs:
       - name: Upload to S3
         run: |
           aws s3 sync app/ s3://demo-iac-cicd-kenjiro-001
-``
