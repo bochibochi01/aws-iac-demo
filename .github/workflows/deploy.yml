@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+push:
+branches:
+- main
+
+jobs:
+deploy:
+runs-on: ubuntu-latest
+
+steps:
+- name: コード取得
+uses: actions/checkout@v3
+
+- name: AWS接続
+uses: aws-actions/configure-aws-credentials@v2
+with:
+aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+aws-region: ap-northeast-1
+
+- name: インフラ作成
+run: |
+aws cloudformation deploy </span>
+--stack-name demo-stack </span>
+--template-file infra/template.yaml
+
+- name: ファイルアップロード
+run: |
+aws s3 sync app/ s3://demo-iac-cicd-kenjiro-001
