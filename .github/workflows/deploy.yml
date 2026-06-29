@@ -10,22 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: コード取得
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: AWS接続
+      - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
 
-      - name: インフラ構築
+      - name: Deploy CloudFormation
         run: |
           aws cloudformation deploy \
-          --stack-name demo-stack \
-          --template-file infra/template.yaml
+            --stack-name demo-stack \
+            --template-file infra/template.yaml
 
-      - name: ファイルアップロード
+      - name: Upload to S3
         run: |
           aws s3 sync app/ s3://demo-iac-cicd-kenjiro-001
