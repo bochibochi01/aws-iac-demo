@@ -1,0 +1,7 @@
+Resources:
+DemoBucket:
+Type: AWS::S3::Bucket
+Properties:
+BucketName: demo-iac-cicd-kenjiro-001
+WebsiteConfiguration:
+IndexDocument: index.html
